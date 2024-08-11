@@ -1,176 +1,150 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Farm</title>
- 
-    <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{asset('assets/resources/img/kofem_logo.png')}}" type="image/x-icon" />
+    <link rel="stylesheet" href="{{asset('assets/resources/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/resources/fontawesome/css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/resources/fontawesome/css/brands.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/resources/fontawesome/css/solid.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/assets/css/responsive.css')}}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-    
+    <link rel="stylesheet" href="{{asset('assets/resources/DataTable/jquery.dataTables.min.css')}}">
 
-    <script src="{{asset('https://code.jquery.com/jquery-3.5.1.min.js')}}" crossorigin="anonymous"></script>
-    <script src="{{asset('https://use.fontawesome.com/releases/v6.1.0/js/all.js')}}" crossorigin="anonymous"></script>
+    <script src="{{asset('assets/resources/jQuery/jquery.js')}}"></script>
+
+
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+
    
-
-  <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="{{asset('assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
-  <!-- Toastr -->
-
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('assets/css/adminlte.min.css')}}">
-
-
-    <link rel="stylesheet" href="{{asset('assets/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
-
-  <link rel="stylesheet" href="{{asset('assets/fontawesome-free/css/all.min.css')}}">
-  <!-- Ekko Lightbox -->
-  <link rel="stylesheet" href="{{asset('assets/ekko-lightbox/ekko-lightbox.css')}}">
-
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <title>KOFEM - Farm Manager</title>
 </head>
+<body>
+
+    <div class="main">
+        @include('sweetalert::alert')
+        <section id="sidebar" class="py-3">
+            <a href="/" class="d-flex align-items-center justify-content-center py-3 my-3 text-decoration-none">
+                <img src="{{asset('assets/resources/img/kofem_logo.png')}}" alt="KOFEM Logo" class="w-50">
+            </a>
+    
+            <ul class="nav nav-pills flex-column mb-auto">
+            
+                <li class="dropdown {{  Route::is('dashboard') ? 'active' : '' }}">
 
 
-<body class="sb-nav-fixed">
-@include('sweetalert::alert')
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="#">Farm Manager</a>
-    <!-- Sidebar Toggle-->
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-            class="fas fa-bars"></i></button>
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                   aria-describedby="btnNavbarSearch"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-        </div>
-    </form>
-    <!-- Navbar-->
-    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
-<div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Core</div>
-                    <a class="nav-link" href="{{route('dashboard')}}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <a href="{{route('dashboard')}}" class="nav-link text-white">
+                        <i class="fa-regular fa-chart-line"></i>
                         Dashboard
                     </a>
-                    <div class="sb-sidenav-menu-heading">Interface</div>
-                    <a class="nav-link" href="{{route('farm.index')}}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tree"></i></div>
-                        Farm
+                </li>
+                {{-- {{route('farm.index')}},{{route('crop.index')}},{{route('category.index')}} --}}
+                <li class="dropdown {{  Route::is('farm.index') || Route::is('farm-crop.index') || Route::is('farm_register.index') || Route::is('farmUpload.index') ||  Route::is('note.index')  ? 'active' : '' }}">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageFarmToggle">
+                        <i class="fa-regular fa-bars-progress"></i>
+                        Manage Farm
                     </a>
-                    <a class="nav-link" href="{{route('crop.index')}}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-leaf"></i></div>
-                        Crop
-                    </a>
-
-                    <a class="nav-link" href="{{route('category.index')}}">
-                        <div class="sb-nav-link-icon"><i class="fas fa-list-ul"></i></div>
-                        Categories
-                    </a>
-
-
-
-                   
-                </div>
-            </div>
-            <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                farm manager
-            </div>
-        </nav>
-    </div>
-    <div id="layoutSidenav_content">
-
-        @yield('content')
-
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">   </div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        $('#describe').summernote({
-            placeholder: 'Write a little something about your farm',
-            tabsize: 2,
-            height: 100
-        })
-    });
-</script>
-
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{asset('js/scripts.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-
-    <script src="{{asset('assets/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{asset('assets/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{asset('assets/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{asset('assets/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{asset('assets/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{asset('assets/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{asset('assets/jszip/jszip.min.js') }}"></script>
-<script src="{{asset('assets/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{asset('assets/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{asset('assets/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{asset('assets/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{asset('assets/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-
-<script src="{{asset('assets/filterizr/jquery.filterizr.min.js') }}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('assets/dist/js/demo.js') }}"></script>
-
-<!-- Bootstrap -->
-<script src="{{asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- Ekko Lightbox -->
-<script src="{{asset('assets/ekko-lightbox/ekko-lightbox.min.js') }}"></script>
-    <!-- AdminLTE App -->
-
-
-
-
-
-    <!-- <script src="../../plugins/jquery/jquery.min.js"></script> -->
-<!-- Bootstrap 4 -->
-<script src="{{asset('assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- SweetAlert2 -->
-<script src="{{asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
-
-
-
+                    <ul class="d-none drop-menu {{  Route::is('farm.index') || Route::is('farm-crop.index') ||  Route::is('farm_register.index') || Route::is('farmUpload.index') ||  Route::is('note.index')  ? 'active' : '' }}" id="manageFarmDropdown">
+                        <li><a class="" href="{{route('farm.index')}}"><i class="fa-regular fa-binoculars"></i>Farm Overview</a></li>
+                        <li><a class="" href="{{route('farm-crop.index')}}"><i class="fa-regular fa-leaf"></i>Farm Crop</a></li>
+                        <li><a class="" href="{{route('farm_register.index')}}"><i class="fa-regular fa-list-check"></i>Farm Activities</a></li>
+                        <li><a class="" href="{{route('farmUpload.index')}}"><i class="fa-regular fa-cloud-arrow-up"></i>Farm Upload</a></li>
+                        <li><a class="" href="{{route('note.index')}}"><i class="fa-regular fa-book"></i>Farm Notes</a></li>
+                    </ul>
+                </li>
     
-   
+                <li class="dropdown {{  Route::is('crop.index') || Route::is('crop.create')  ? 'active' : '' }}">
+                    <a href="{{route('crop.index')}}" class="nav-link text-white dropdown-toggle" id="manageCropsToggle">
+                        <i class="fa-regular fa-wheat-awn"></i>
+                        Manage Crops
+                    </a>
+                    <ul class="d-none drop-menu" id="manageCropsDropdown">
+                        <li><a class="" href="{{route('crop.create')}}"><i class="fa-regular fa-plus"></i>Add Crops</a></li>
+                        <li><a class="" href="{{route('crop.index')}}"><i class="fa-regular fa-eye"></i>View Crops</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown {{  Route::is('category.index') || Route::is('category.create') ? 'active' : '' }}">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-tractor"></i>
+                        Farm Categories
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li class="{{   Route::is('category.create') ? 'active' : '' }}"><a href="{{route('category.create')}}"><i class="fa-regular fa-plus"></i>Add Category</a></li>
+                        <li class="{{  Route::is('category.index')  ? 'active' : '' }}"><a  href="{{route('category.index')}}"><i class="fa-regular fa-eye"></i>View Category</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
 
+
+
+        <section id="content">
+            <!-- Header -->
+            <div class="container-fluid p-0">
+
+                <!-- Header  -->
+                <div class=" search  d-flex justify-content-between align-items-center">
+                    <!-- search box -->
+                    <div class="col">
+                      <span class="bars d-md-none pe-3">
+                        <i class="fa-regular fa-bars"  style="font-size: 30px;"></i>
+                      </span>
+                    </div>
+                    <div class="search-box col-md-4">
+                      <form action="post">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control py-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search here">
+                          <input type="submit" class="input-group-text btn btn-success" id="inputGroup-sizing-sm" value="Search">
+                        </div> 
+                      </form>
+                      
+                    </div>
+                    <!-- search box -->
+        
+                    
+  
+                    <!-- User details -->
+                    <div class="dropdown user-details col-md-4 d-flex justify-content-end align-items-center">
+                      <h5 class="m-0 d-none d-md-flex align-items-center">Admin</h5>
+                      <a href="#" class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="{{asset('assets/resources/img/02.jpg')}}" alt="user" width="40px" height="auto" class="ms-3">
+                      </a>
+  
+                      <ul class="dropdown-menu text-small shadow">
+                          <li><a class="dropdown-item" href="#">New project...</a></li>
+                          <li><a class="dropdown-item" href="#">Settings</a></li>
+                          <li><a class="dropdown-item" href="#">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                    <!-- User details -->
+                </div>
+                <!-- Header  -->
+            </div>
+
+            <!-- body -->
+            <div class="container-fluid p-3 p-md-4 p-lg-5">
+                @yield('content')
+            </div>
+        </section>
+    
+        
+    </div>
+    
+    <script src="{{asset('assets/resources/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/assets/js/script.js')}}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+    <script src="{{asset('assets/resources/DataTable/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/resources/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    {{-- <script src="{{asset('assets/assets/js/script.js')}}"></script> --}}
 </body>
 </html>

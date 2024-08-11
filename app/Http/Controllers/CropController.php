@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-use App\Models\crop;
+use App\Models\Crop;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -15,7 +15,7 @@ class CropController extends Controller
      */
     public function index()
     {
-        $crops = crop::where('is_deleted', false)->get();
+        $crops = Crop::where('is_deleted', false)->get();
         if (session('success_message')){
             Alert::toast(session('success_message'),'success')->autoClose(4000);
         }
@@ -40,7 +40,7 @@ class CropController extends Controller
      */
     public function store(Request $request)
     {
-        crop::create([
+        Crop::create([
             'name'=> $request->input('name'),
             'description'=> $request->input('description'),
             'duration'=>$request->input('duration')
@@ -60,7 +60,7 @@ class CropController extends Controller
      * @param  \App\Models\crop  $crop
      * @return \Illuminate\Http\Response
      */
-    public function show(crop $crop)
+    public function show(Crop $crop)
     {
         //
     }
@@ -71,7 +71,7 @@ class CropController extends Controller
      * @param  \App\Models\crop  $crop
      * @return \Illuminate\Http\Response
      */
-    public function edit(crop $crop)
+    public function edit(Crop $crop)
     {
         return view('crop.edit',compact('crop'));
     }
@@ -83,7 +83,7 @@ class CropController extends Controller
      * @param  \App\Models\crop  $crop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, crop $crop)
+    public function update(Request $request, Crop $crop)
     {
         $crop->update([
         'name'=> $request->input('name'),
@@ -99,7 +99,7 @@ class CropController extends Controller
      * @param  \App\Models\crop  $crop
      * @return \Ill return redirect()->route('crop.index');uminate\Http\Response
      */
-    public function destroy(crop $crop)
+    public function destroy(Crop $crop)
     {
         
         $crop->update(['is_deleted' => true]);

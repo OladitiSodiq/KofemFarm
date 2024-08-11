@@ -1,97 +1,60 @@
 @extends('layout')
 
 @section('content')
-<style>
-    /* Set fixed width for the Farm Name column */
-    #datatablesSimple th:nth-child(1),
-    #datatablesSimple td:nth-child(1) {
-        width: 200px; /* Adjust the width as needed */
-    }
 
-    /* Set fixed width for the Notes column */
-    #datatablesSimple th:nth-child(2),
-    #datatablesSimple td:nth-child(2) {
-        width: 400px; /* Adjust the width as needed */
-    }
 
-    /* Set fixed width for the Actions columns */
-    #datatablesSimple th:nth-child(3),
-    #datatablesSimple th:nth-child(4),
-    #datatablesSimple td:nth-child(3),
-    #datatablesSimple td:nth-child(4) {
-        width: 100px; /* Adjust the width as needed */
-    }
-</style>
-    <main>
-        <div class="container-fluid px-4">
-            <h1 class="mt-4"><i class="fas fa-pen"></i> Notes</h1>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('farm.index')}}"><i class="fas fa-tree"></i>farm</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link " href="{{route('lease.index')}}"><i class="fas fa-coins px-1"></i>Farm Leases</a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('farm-crop.index')}}"><i class="fas fa-leaf"></i>Farm Crop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('register.index')}}"><i class="fas fa-book"></i>Farm Activities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{route('note.index')}}"><i class="fas fa-pen"></i>Farm Notes</a>
-                </li>
-            </ul>
-            <div class="row pt-3">
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-dark text-white mb-4">
-                        <div class="card-body"><a class="small text-white stretched-link" href="{{route('note.create')}}">
-                            </a>Add note</div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                </div>
-                <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                        <tr>
-                            <th><i class="fas fa-id-card me-1"></i>Farm Name</th>
-                            <th><i class="fas fa-sticky-note me-1"></i>Notes</th>
-                            <th colspan="2"><i class="fas fa-hammer me-1"></i>Actions</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Farm Name</th>
-                            <th>Notes</th>
-                            <th colspan="2">Actions</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        @foreach($farm_notes as $farm_note)
-                            <tr>
-                                <td>{{$farm_note->farm2?->name}}</td>
-                                <td>{!! $farm_note->notes !!}</td>
-                                <td><a class="btn btn-outline-primary " href="{{route('note.edit', $farm_note)}}"><i class="fas fa-edit"></i>Edit</a>
-                                </td>
-                                <td>
-                                    <form method="post" action="{{route('note.destroy',$farm_note)}}">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger">
-                                            <i class="fas fa-trash"></i>delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </main>
+
+<div class="row">
+    <div class="col-md-8 mt-3 mt-md-0">
+        <p class="heading-1">View Farm Notes</p>
+        <p class="">Browse and manage your categories, including their names and descriptions. Use the action buttons to edit or delete category details as needed for efficient organization and management.</p>
+    </div>
+    <div class="col-md-4 d-flex align-items-center justify-content-end mt-3 mt-md-0">
+        <a href="{{route('note.create')}}" class="btn bg-success text-white p-2 px-4">
+            Add Farm Note<i class="fa-regular fa-add ps-2"></i>
+        </a>
+    </div>
+</div>
+<div class="mt-4 table-responsive">
+    <table class="table table-hover" id="example">
+        <thead class="table-dark">
+            <tr>
+          
+                <th class="py-3">Farm Name</th>
+                <th class="py-3">Farm Notes</th>
+                <th class="py-3">Date Added</th>
+                <th class="py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($farm_notes as $farm_note)
+            <tr>
+         
+                <td class="py-3">{{$farm_note->farm2?->name}}</td>
+                <td class="py-3 w-50">
+
+                    {!! $farm_note->notes !!}
+                </td>
+                <td class="py-3">{{ $farm_note->created_at }}</td>
+                
+                <td class="py-3">
+                    <a href="{{route('note.edit', $farm_note)}}" class="pe-lg-3 p-2 me-lg-2 text-white bg-primary d-inline-block mb-3  text-center"><i class="fa-regular fa-edit px-2"></i>Edit</a>
+                    <form method="post" action="{{route('note.destroy',$farm_note)}}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-outline-danger">
+                            <i class="fas fa-trash"></i>delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+
+            
+        </tbody>
+    </table>
+       
+        
+</div>
+
 @endsection

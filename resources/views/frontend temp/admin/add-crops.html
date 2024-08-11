@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../resources/img/kofem_logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/fontawesome.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/brands.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/solid.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <title>KOFEM - Farm Manager</title>
+</head>
+<body>
+
+    <div class="main">
+
+        <section id="sidebar" class="py-3">
+            <a href="/" class="d-flex align-items-center justify-content-center py-3 my-3 text-decoration-none">
+                <img src="../resources/img/kofem_logo.png" alt="KOFEM Logo" class="w-50">
+            </a>
+    
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="dropdown">
+                    <a href="dashboard.html" class="nav-link text-white">
+                        <i class="fa-regular fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageFarmToggle">
+                        <i class="fa-regular fa-bars-progress"></i>
+                        Manage Farm
+                    </a>
+                    <ul class="d-none drop-menu" id="manageFarmDropdown">
+                        <li><a class="" href="farm-overview.html"><i class="fa-regular fa-binoculars"></i>Farm Overview</a></li>
+                        <li><a class="" href="farm-crop.html"><i class="fa-regular fa-leaf"></i>Farm Crop</a></li>
+                        <li><a class="" href="farm-activities.html"><i class="fa-regular fa-list-check"></i>Farm Activities</a></li>
+                        <li><a class="" href="farm-upload.html"><i class="fa-regular fa-cloud-arrow-up"></i>Farm Upload</a></li>
+                        <li><a class="" href="farm-notes.html"><i class="fa-regular fa-book"></i>Farm Notes</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown active">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageCropsToggle">
+                        <i class="fa-regular fa-wheat-awn"></i>
+                        Manage Crops
+                    </a>
+                    <ul class="d-none drop-menu" id="manageCropsDropdown">
+                        <li class="active"><a href="add-crops.html"><i class="fa-regular fa-plus"></i>Add Crops</a></li>
+                        <li><a class="" href="view-crops.html"><i class="fa-regular fa-eye"></i>View Crops</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-tractor"></i>
+                        Farm Categories
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a class="" href="add-categories.html"><i class="fa-regular fa-plus"></i>Add Category</a></li>
+                        <li><a class="" href="view-categories.html"><i class="fa-regular fa-eye"></i>View Category</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-arrows-to-dot"></i>
+                        Farm Assets
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a href="add-farm-assets.html"><i class="fa-regular fa-plus"></i>Add Farm Assets</a></li>
+                        <li><a href="view-farm-assets.html"><i class="fa-regular fa-eye"></i>View Farm Assets</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="content">
+            <!-- Header -->
+            <div class=" search  d-flex justify-content-between align-items-center">
+                <!-- search box -->
+                <div class="col">
+                  <span class="bars d-md-none pe-3">
+                    <i class="fa-regular fa-bars"  style="font-size: 30px;"></i>
+                  </span>
+                </div>
+                <div class="search-box col-md-4">
+                  <form action="post">
+                    <div class="input-group input-group-sm">
+                      <input type="text" class="form-control py-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search here">
+                      <input type="submit" class="input-group-text btn btn-success" id="inputGroup-sizing-sm" value="Search">
+                    </div> 
+                  </form>
+                  
+                </div>
+                <!-- search box -->
+    
+                
+
+                <!-- User details -->
+                <div class="dropdown user-details col-md-4 d-flex justify-content-end align-items-center">
+                  <h5 class="m-0 d-none d-md-flex align-items-center">Admin</h5>
+                  <a href="#" class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="../resources/img/02.jpg" alt="user" width="40px" height="auto" class="ms-3">
+                  </a>
+
+                  <ul class="dropdown-menu text-small shadow">
+                      <li><a class="dropdown-item" href="#">New project...</a></li>
+                      <li><a class="dropdown-item" href="#">Settings</a></li>
+                      <li><a class="dropdown-item" href="#">Profile</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+                <!-- User details -->
+            </div>
+
+            <!-- body -->
+            <div class="container-fluid p-3 p-md-4 p-lg-5">
+                <div class="row">
+                    <div class="col-md-8 mt-3 mt-md-0">
+                        <p class="heading-1">Create Crop</p>
+                        <p class="">Add a new crop by entering its name, duration, and description. Provide detailed information to help manage and track the growth cycle and characteristics of your crops.</p>
+                    </div>
+                    <div class="col-md-4 d-none d-md-flex align-items-center justify-content-md-end mt-3 mt-md-0">
+                        <a href="view-crops.html" class="btn bg-success text-white p-2 px-4">
+                            View Crops<i class="fa-regular fa-eye ps-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-4">
+                   <form action="" method="post">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md">
+                            <div class="form-floating">
+                              <input type="text" class="form-control" id="floatingInputGrid" placeholder="Crop Name" required>
+                              <label for="floatingInputGrid">Crop Name</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md">
+                            <div class="form-floating">
+                              <input type="number" class="form-control" id="floatingInputGrid" placeholder="Crop Duration" required>
+                              <label for="floatingInputGrid">Crop Duration &#40;in months&#41;</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px"></textarea>
+                        <label for="floatingTextarea2">Crop Description</label>
+                    </div>
+
+                    <div class="col">
+                        <button type="submit" class="btn btn-success w-100">Create Crop</button>
+                    </div>
+
+                   </form>
+                       
+                        
+                    </div>
+                </div>
+        </section>
+    
+        
+    </div>
+    
+    <script src="../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

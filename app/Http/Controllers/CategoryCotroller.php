@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-use App\Models\category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -16,7 +16,7 @@ class CategoryCotroller extends Controller
      */
     public function index()
     {
-        $categories = category::where('is_deleted', false)->get();
+        $categories = Category::where('is_deleted', false)->get();
         if (session('success_message')) {
             Alert::toast(session('success_message'), 'success')->autoClose(4000);
         }
@@ -29,7 +29,7 @@ class CategoryCotroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(category $category)
+    public function create(Category $category)
     {
         $mains = DB::table('categories')
             ->where('is_deleted', false)->get();
@@ -62,7 +62,7 @@ class CategoryCotroller extends Controller
      * @param \App\Models\category $category
      * @return \Illuminate\Http\Response
      */
-    public function show(category $category)
+    public function show(Category $category)
     {
         //
     }
@@ -73,7 +73,7 @@ class CategoryCotroller extends Controller
      * @param \App\Models\category $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit(Category $category)
     {
         $mains = category::where('is_deleted', false)->get();
         return view('category.edit', compact('category', 'mains'));
@@ -86,7 +86,7 @@ class CategoryCotroller extends Controller
      * @param \App\Models\category $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, category $category)
+    public function update(Request $request, Category $category)
     {
         if ($request->parent_category_id==$category->id){
             return redirect()->back()->withToastError('child cannot be parent');
@@ -105,7 +105,7 @@ class CategoryCotroller extends Controller
      * @param \App\Models\category $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(category $category)
+    public function destroy(Category $category)
     {
     
          

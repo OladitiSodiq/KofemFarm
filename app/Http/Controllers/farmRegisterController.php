@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\category;
-use App\Models\farm_crop;
+use App\Models\Category;
+use App\Models\Farm_crop;
 use App\Models\CropManagementProduct;
 use App\Models\farm_register;
 use Illuminate\Http\Request;
@@ -20,11 +20,11 @@ class farmRegisterController extends Controller
      */
     public function index()
     {
-        $registers= farm_register::where('is_deleted', false)->get();
+        $farm_registers= farm_register::where('is_deleted', false)->get();
         if (session('success_message')){
             Alert::toast(session('success_message'),'success')->autoClose(4000);
         }
-        return view('register.index',compact('registers'));
+        return view('register.index',compact('farm_registers'));
     }
 
     /**
@@ -35,9 +35,9 @@ class farmRegisterController extends Controller
     public function create()
     {
         $FarmCrops=farm_crop::where('is_deleted', false)->get();
-        $CropManagementProduct=CropManagementProduct::where('is_deleted', false)->get();
+        // $CropManagementProduct=CropManagementProduct::where('is_deleted', false)->get();
         $categories=category::where('is_deleted', false)->get();
-        return view('register.create',compact('categories','FarmCrops','CropManagementProduct'));
+        return view('register.create',compact('categories','FarmCrops'));
     }
 
     /**
@@ -48,7 +48,9 @@ class farmRegisterController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->input('activiity_farm_id'));
         farm_register::create([
+            'farm_id'=>$request->input('activiity_farm_id'),
             'farm_crop_id'=> $request->input('farm_crop_id'),
             'category_id'=> $request->input('category_id'),
             'total_cost'=> $request->input('total_cost'),
@@ -91,7 +93,11 @@ class farmRegisterController extends Controller
      */
     public function edit(farm_register $farm_register)
     {
-        return view('register.edit',compact('farm_register'));
+        $FarmCrops=farm_crop::where('is_deleted', false)->get();
+        // $CropManagementProduct=CropManagementProduct::where('is_deleted', false)->get();
+        $categories=category::where('is_deleted', false)->get();
+        // dd($farm_register);
+        return view('register.edit',compact('farm_register','FarmCrops','categories'));
     }
 
     /**
@@ -103,10 +109,38 @@ class farmRegisterController extends Controller
      */
     public function update(Request $request, farm_register $farm_register)
     {
-        $farm_register->update([
-          $request->all()
+        // // dd( $request->all());
+        // $farm_register->update([
+        //   $request->all()
+        // ]);
+        // return redirect()->route('farm_register.index');
+
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+        
+            'farm_crop_id' => 'required|integer',
+            'category_id' => 'required|integer',
+            'total_cost' => 'required|numeric',
+            'description' => 'nullable|string'
         ]);
-        return redirect()->route('register.index');
+
+        // Update the farm_register with the validated data
+        $farm_register->update($validatedData);
+
+
+        if (Auth::user()->name =="Admin"){
+       
+            // Redirect to the admin route
+           
+            return redirect()->route('farm_register.index')->withToastSuccess('farm activites record created successfully');
+        } else {
+
+            return back()->withToastSuccess('farm activites record created successfully');
+
+            // Redirect to another route for non-admin users
+            // return redirect()->route('non-admin-route')->withSuccessMessage('');
+        }
+
     }
 
     /**
@@ -120,6 +154,6 @@ class farmRegisterController extends Controller
        
         $farm_register->update(['is_deleted' => true]);
 
-        return redirect()->route('register.index');
+        return redirect()->route('farm_register.index');
     }
 }

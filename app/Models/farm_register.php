@@ -7,14 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class farm_register extends Model
 {
-    protected $fillable=[
-        'farm_crop_id',
-        'category_id',
-        'total_cost',
-        'quantity',
-        'description',
-        'date_created',
-    ];
+    // protected $fillable=[
+        
+    //     'farm_id',
+    //     'farm_crop_id',
+    //     'category_id',
+    //     'total_cost',
+    //     'description',
+    //     'date_created',
+    // ];
+
+    protected $guarded = [];
+
 
     public function categoryparent()
     {

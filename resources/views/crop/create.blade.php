@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    <main>
+    {{-- <main>
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -47,5 +47,49 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
-    </main>
+    </main> --}}
+
+    <div class="row">
+        <div class="col-md-8 mt-3 mt-md-0">
+            <p class="heading-1">Create Crop</p>
+            <p class="">Add a new crop by entering its name, duration, and description. Provide detailed information to help manage and track the growth cycle and characteristics of your crops.</p>
+        </div>
+        <div class="col-md-4 d-none d-md-flex align-items-center justify-content-md-end mt-3 mt-md-0">
+            <a href="{{route('crop.index')}}" class="btn bg-success text-white p-2 px-4">
+                View Crops<i class="fa-regular fa-eye ps-2"></i>
+            </a>
+        </div>
+    </div>
+    <div class="mt-4">
+        <form method="post" action="{{route('crop.store')}}">
+            @csrf
+            <div class="row g-2 mb-3">
+                <div class="col-md">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGrid" name="name" placeholder="Crop Name" required>
+                    <label for="floatingInputGrid">Crop Name</label>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="form-floating">
+                    <input type="text" class="form-control" id="floatingInputGrid" name="duration" placeholder="Crop Duration" required>
+                    <label for="floatingInputGrid">Crop Duration &#40;in months&#41;</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Leave a comment here" name="description" id="floatingTextarea2" style="height: 150px"></textarea>
+                <label for="floatingTextarea2">Crop Description</label>
+            </div>
+
+            <div class="col">
+                <button type="submit" class="btn btn-success w-100">Create Crop</button>
+            </div>
+
+        </form>
+        
+            
+    </div>
 @endsection

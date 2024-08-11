@@ -17,7 +17,7 @@
                     <a class="nav-link" href="{{route('farm-crop.index')}}"><i class="fas fa-leaf"></i>Farm Crop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{{route('register.index')}}"><i class="fas fa-book"></i>Farm Activities</a>
+                    <a class="nav-link " href="{{route('farm_register.index')}}"><i class="fas fa-book"></i>Farm Activities</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link " href="{{route('farm-tools-mapping.index')}}"><i class="fas fa-tools px-1"></i>Farm Tools</a>
@@ -70,8 +70,8 @@
                                         $farm_crop_id  =\App\Models\Farm_crop::where('id',$farm_register->farm_crop_id)->first();
                                         $category  =\App\Models\Category::where('id',$farm_register->category_id)->first();
 
-                                        $farmname = \App\Models\farm::where('id',$farm_crop_id->farm_id)->first();
-                                        $cropname = \App\Models\crop::where('id',$farm_crop_id->crop_id)->first();
+                                        $farmname = \App\Models\Farm::where('id',$farm_crop_id->farm_id)->first();
+                                        $cropname = \App\Models\Crop::where('id',$farm_crop_id->crop_id)->first();
                                     @endphp
 
                                     <tr>

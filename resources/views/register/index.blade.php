@@ -1,104 +1,66 @@
 @extends('layout')
 @section('content')
-    <main>
-
-        <div class="container-fluid px-4">
-            <h1 class="mt-4"><i class="fas fa-book"></i>Farm Activities</h1>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('farm.index')}}"><i class="fas fa-tree"></i>farm</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link " href="{{route('lease.index')}}"><i class="fas fa-coins px-1"></i>Farm Leases</a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('farm-crop.index')}}"><i class="fas fa-leaf"></i>Farm Crop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{route('register.index')}}"><i class="fas fa-book"></i>Farm Activities</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('farm-tools-mapping.index')}}"><i class="fas fa-tools px-1"></i>Farm Tools</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('farmUpload.index')}}"><i class="fas fa-upload px-1"></i>Farm Upload</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="{{route('note.index')}}"><i class="fas fa-pen"></i>Farm Notes</a>
-                </li>
-            </ul>
-            <div class="row pt-3">
-                <div class="col-xl-3 col-md-6">
-                    <div class="card bg-dark text-white mb-4">
-                        <div class="card-body"><a class="small text-white stretched-link" href="{{route('register.create')}}">
-                            </a>Add Farm Activities</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-table me-1"></i>
-                </div>
-                <div class="card-body">
-                    <table id="datatablesSimple">
-                        <thead>
-                        <tr>
-                            <th class="col-md-3"><i class="fas fa-address-card me-1"></i>Farm Crop </th>
-                            <th  class="col-md-3"><i class="fas fa-object-ungroup me-1"></i>Category </th>
-                            <th  class="col-md-3"><i class="fas fa-coins me-1"></i>Total Cost</th>
-                          
-
-                            <th  class="col-md-3"><i class="fas fa-calendar-check me-1"></i>Date created</th>
-                            <th  class="col-md-3" colspan="3"><i class="fas fa-hammer me-1"></i>Actions</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th class="col-md-3">Farm Crop</th>
-                            <th class="col-md-3">Category</th>
-                            <th class="col-md-3">Total Cost</th>
-                          
-                           
-                            <th class="col-md-3">Date created</th>
-                            <th class="col-md-3">Actions</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        @foreach($registers as $register)
-                                @php
-                                    $farm_crop_id  =\App\Models\Farm_crop::where('id',$register->farm_crop_id)->first();
-
-
-                                    $category  =\App\Models\Category::where('id',$register->category_id)->first();
-
-                                    $farmname = \App\Models\farm::where('id',$farm_crop_id->farm_id)->first();
-                                    $cropname = \App\Models\crop::where('id',$farm_crop_id->crop_id)->first();
-                                @endphp
-                            <tr>
-                                <td>{{$farmname->name}} - {{$cropname->name}} </td>
-                                <td>{{$category->name}}</td>
-                                <td>{{$register->total_cost}}</td>
-                          
-                              
-                                <td>{{$register->created_at}}</td>
-                                <td><a class="btn btn-primary " href="{{route('register.edit', $register)}}"><i class="fas fa-edit"></i>Edit</a></td>
-                                <td>
-                                    <form method="post" action="{{route('register.destroy',$register)}}">
-                                        @csrf
-                                        @method('delete')
-                                        <button  type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger">
-                                            <i class="fas fa-trash"></i>delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-8 mt-3 mt-md-0">
+            <p class="heading-1">Farm Activities</p>
+            <p class="">Track and manage all activities on your farm, including crop type, activity category, total cost, and date created. Stay organized and keep detailed records of your farm operations for better planning and analysis.</p>
         </div>
-    </main>
+        <div class="col-md-4 d-flex align-items-center justify-content-end mt-3 mt-md-0">
+            <a href="{{route('farm_register.create')}}" class="btn bg-success text-white p-2 px-4">
+                Add Farm Activities<i class="fa-regular fa-add ps-2"></i>
+            </a>
+        </div>
+    </div>
+    <div class="mt-4 table-responsive">
+        <table class="table table-hover align-middle" id="example">
+            <thead class="table-dark">
+                <tr>
+                    <th class="py-3">S/N</th>
+                    <th class="py-3">Farm Name</th>
+                    <th class="py-3">Farm Crop</th>
+                    <th class="py-3">Category</th>
+                    <th class="py-3">Total Cost</th>
+                    <th class="py-3">Date Created</th>
+                    <th class="py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($farm_registers as $farm_register)
+                @php
+                    $farm_crop_id  =\App\Models\Farm_crop::where('id',$farm_register->farm_crop_id)->first();
+
+
+                    $category  =\App\Models\Category::where('id',$farm_register->category_id)->first();
+
+                    $farmname = \App\Models\Farm::where('id',$farm_crop_id->farm_id)->first();
+                    $cropname = \App\Models\Crop::where('id',$farm_crop_id->crop_id)->first();
+                @endphp
+                <tr>
+                    <td class="py-3">1.</td>
+                    <td class="py-3">{{$farmname->name}} </td>
+                    <td class="py-3">{{$cropname->name}}</td>
+                    <td class="py-3">{{$category->name}}</td>
+                    <td class="py-3">{{$farm_register->total_cost}}</td>
+                  
+                    <td class="py-3">{{$farm_register->created_at}}</td>
+                    <td class="py-3">
+                        @if (Auth::user()->role_id == 2)
+                        <a href="{{route('farm_register.edit', $farm_register)}}" class="pe-lg-3 p-2 me-lg-2 text-white bg-primary d-inline-block mb-3  text-center"><i class="fa-regular fa-edit px-2"></i>Edit</a>
+                        {{-- <a href="#" class="pe-lg-3 p-2 me-lg-2 text-white bg-danger d-inline-block mb-3 text-center"><i class="fa-regular fa-trash px-2"></i>Delete</a> --}}
+                        <a href="" class="p-2 me-2 text-white bg-danger d-inline-flex " onclick="event.preventDefault(); if (confirm('Are you sure you want to delete?')) document.getElementById('delete-form-{{ $farm_register->id }}').submit();"><i class="fa-regular fa-trash"></i></a>
+                            @endif
+    
+                            <form id="delete-form-{{ $farm_register->id }}" method="post" action="{{ route('farm_register.destroy', $farm_register) }}" style="display: none;">
+                                @csrf
+                                @method('delete')
+                            </form>
+                    </td>
+                </tr>
+                @endforeach
+
+                
+            </tbody>
+        </table> 
+    </div>
 
 @endsection

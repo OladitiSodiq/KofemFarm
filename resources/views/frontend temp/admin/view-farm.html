@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../resources/DataTable/jquery.dataTables.min.css">
+    <link rel="shortcut icon" href="../resources/img/kofem_logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/fontawesome.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/brands.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/solid.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <title>KOFEM - Farm Manager</title>
+
+    <script src="../resources/jQuery/jquery.js"></script>
+</head>
+<body>
+
+    <div class="main">
+
+        <section id="sidebar" class="py-3">
+            <a href="/" class="d-flex align-items-center justify-content-center py-3 my-3 text-decoration-none">
+                <img src="../resources/img/kofem_logo.png" alt="KOFEM Logo" class="w-50">
+            </a>
+    
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="dropdown">
+                    <a href="dashboard.html" class="nav-link text-white ">
+                        <i class="fa-regular fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li class="dropdown active">
+                    <a href="farm-overview.html" class="nav-link text-white ">
+                        <i class="fa-regular fa-chart-line"></i>
+                        Farm Overview
+                    </a>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageCropsToggle">
+                        <i class="fa-regular fa-wheat-awn"></i>
+                        Manage Crops
+                    </a>
+                    <ul class="d-none drop-menu" id="manageCropsDropdown">
+                        <li><a class="" href="add-crops.html"><i class="fa-regular fa-plus"></i>Add Crops</a></li>
+                        <li><a class="" href="view-crops.html"><i class="fa-regular fa-eye"></i>View Crops</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageCropsToggle">
+                        <i class="fa-regular fa-user-gear"></i>
+                        Manage Staff
+                    </a>
+                    <ul class="d-none drop-menu" id="manageCropsDropdown">
+                        <li><a class="" href="add-staff.html"><i class="fa-regular fa-plus"></i>Add Staff</a></li>
+                        <li><a class="" href="view-staff.html"><i class="fa-regular fa-eye"></i>View Staff</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-tractor"></i>
+                        Farm Categories
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a class="" href="add-categories.html"><i class="fa-regular fa-plus"></i>Add Category</a></li>
+                        <li><a class="" href="view-categories.html"><i class="fa-regular fa-eye"></i>View Category</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-arrows-to-dot"></i>
+                        Farm Assets
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a href="add-farm-assets.html"><i class="fa-regular fa-plus"></i>Add Farm Assets</a></li>
+                        <li><a href="view-farm-assets.html"><i class="fa-regular fa-eye"></i>View Farm Assets</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="content">
+            <div class="container-fluid p-0">
+
+                <!-- Header  -->
+                <div class=" search  d-flex justify-content-between align-items-center">
+                    <!-- search box -->
+                    <div class="col">
+                      <span class="bars d-md-none pe-3">
+                        <i class="fa-regular fa-bars"  style="font-size: 30px;"></i>
+                      </span>
+                    </div>
+                    <div class="search-box col-md-4">
+                      <form action="post">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control py-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search here">
+                          <input type="submit" class="input-group-text btn btn-success" id="inputGroup-sizing-sm" value="Search">
+                        </div> 
+                      </form>
+                      
+                    </div>
+                    <!-- search box -->
+        
+                    
+  
+                    <!-- User details -->
+                    <div class="dropdown user-details col-md-4 d-flex justify-content-end align-items-center">
+                      <h5 class="m-0 d-none d-md-flex align-items-center">Admin</h5>
+                      <a href="#" class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="../resources/img/02.jpg" alt="user" width="40px" height="auto" class="ms-3">
+                      </a>
+  
+                      <ul class="dropdown-menu text-small shadow">
+                          <li><a class="dropdown-item" href="#">New project...</a></li>
+                          <li><a class="dropdown-item" href="#">Settings</a></li>
+                          <li><a class="dropdown-item" href="#">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                    <!-- User details -->
+                </div>
+                <!-- Header  -->
+
+                <div class="p-3 p-md-4 p-lg-5">
+
+                    <div class="row flex-md-row-reverse">
+                        <div class="col-md-4 px-3">
+                            <div class="row">
+                                <p class="heading-1">Farm A</p>
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui similique est esse expedita.</p>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col">
+                                    <h5 class="fw-bold textp">Location</h5>
+                                    <p>Ikeja</p>
+                                </div>
+                                <div class="col">
+                                    <h5 class="fw-bold textp">Size &#40;Acres&#41;</h5>
+                                    <p>Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="row gap-2 gap-md-0 g-1 d-none">
+                                <a href="#" class="col col-md-12 p-2 text-white bg-secondary d-inline-block mb-3 mb-md-0  text-center"><i class="fa-regular fa-eye px-2"></i>Fund Wallets</a>
+                                <a href="#" class="col col-md-12 p-2 text-white bg-info d-inline-block mb-3 mb-md-0  text-center"><i class="fa-regular fa-edit px-2"></i>Assign Staff to farm</a>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="row gap-md-2">
+                                <div class="col px-md-0">
+                                    <div class="card mb-3 border-success text-center">
+                                        <div class="card-header bg-success py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Total Assets amount spent</p>
+                                            <h2 class="card-title mt-1 fw-bold"><span class="naira">N</span>30,000</h2>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col px-md-0">
+                                    <div class="card mb-3 border-warning text-center">
+                                        <div class="card-header bg-warning py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Total Activity amount spent</p>
+                                            <h2 class="card-title mt-1 fw-bold"><span class="naira">N</span>30,000</h2>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col px-md-0">
+                                    <div class="card mb-3 border-info text-center">
+                                        <div class="card-header bg-info py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Estimated Project Duration</p>
+                                            <h2 class="card-title mt-1 fw-bold"><span class="naira">N</span>30,000</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row px-md-0 px-3 ">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="fw-bold">Recent Notes</h3>
+                                        <ul class="list-group list-group-flush">
+                                          <li class="list-group-item px-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nonummy molestie, nunc vel semper vestibulum, nisi lectus tempus mauris, quis porta neque velit quis justo.</li>
+                                          <li class="list-group-item px-0">Maecenas et ipsum ac risus ultricies ultricies. Pellentesque habitant morbi tristique sen
+                                    </div>
+                                  </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                   
+                    <!-- Farm Crop -->
+                    <div class="row mt-4 px-3 px-md-0">
+                        <div class="accordion card px-0 border-success border-2 overflow-hidden" id="farmcrops">
+                            <div class="card-header p-0">
+                                <button class="accordion-button collapsed bg-success" type="button" data-bs-toggle="collapse" data-bs-target="#farm-crops" aria-expanded="false" aria-controls="farm-upload">
+                                    <h5 class="text-white">Farm Crops</h5>
+                                </button>
+                            </div>
+                            <div id="farm-crops" class="accordion-collapse collapse" data-bs-parent="#farmcrops">
+                                <div class="accordion-body card-body bg-white">
+                                    <div class="mt-4 table-responsive">
+                                        <table class="table table-hover" id="example">
+                                            <thead class="table-success">
+                                                <tr>
+                                                    <th class="py-3">S/N</th>
+                                                    <th class="py-3">Farm Name</th>
+                                                    <th class="py-3">Crop Name</th>
+                                                    <th class="py-3">Farm Size &#40;Acres&#41;</th>
+                                                    <th class="py-3">Planted Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-3">1.</td>
+                                                    <td class="py-3">Farm</td>
+                                                    <td class="py-3">Maize</td>
+                                                    <td class="py-3">300</td>
+                                                    <td class="py-3">11 August 2024</td>
+                                                </tr>
+    
+                                            </tbody>
+                                        </table>
+                                        
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <!-- Farm Activities -->
+                    <div class="row mt-4 px-3 px-md-0">
+                        <div class="accordion card px-0 border-warning border-2 overflow-hidden" id="farmactivities">
+                            <div class="card-header p-0">
+                                <button class="accordion-button collapsed bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#farm-activities" aria-expanded="false" aria-controls="farm-activities">
+                                    <h5 class="text-white">Farm Activities</h5>
+                                </button>
+                            </div>
+                            <div id="farm-activities" class="accordion-collapse collapse" data-bs-parent="#farmactivities">
+                                <div class="accordion-body card-body bg-white">
+                                    <div class="mt-4 table-responsive">
+                                        <table class="table table-hover" id="example1">
+                                            <thead class="table-warning">
+                                                <tr>
+                                                    <th class="py-3">S/N</th>
+                                                    <th class="py-3">Farm Name</th>
+                                                    <th class="py-3">Crop Name</th>
+                                                    <th class="py-3">Farm Activities</th>
+                                                    <th class="py-3">Cost</th>
+                                                    <th class="py-3">Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-3">1.</td>
+                                                    <td class="py-3">Farm</td>
+                                                    <td class="py-3">Maize</td>
+                                                    <td class="py-3">Spraying</td>
+                                                    <td class="py-3">300</td>
+                                                    <td class="py-3">11 August 2024</td>
+                                                </tr>
+    
+                                            </tbody>
+                                        </table>
+                                        
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+
+                    <!-- Farm Assets Used -->
+                    <div class="row mt-4 px-3 px-md-0">
+                        <div class="accordion card px-0 border-primary border-2 overflow-hidden" id="farmassets">
+                            <div class="card-header p-0">
+                                <button class="accordion-button collapsed bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#farm-assets" aria-expanded="false" aria-controls="farm-upload">
+                                    <h5 class="text-white">Farm Assets Used</h5>
+                                </button>
+                            </div>
+                            <div id="farm-assets" class="accordion-collapse collapse" data-bs-parent="#farmassets">
+                                <div class="accordion-body card-body bg-white">
+                                    <div class="mt-4 table-responsive">
+                                        <table class="table table-hover" id="example1">
+                                            <thead class="table-info">
+                                                <tr>
+                                                    <th class="py-3">S/N</th>
+                                                    <th class="py-3">Date</th>
+                                                    <th class="py-3">Assets</th>
+                                                    <th class="py-3">Farm</th>
+                                                    <th class="py-3">Stock</th>
+                                                    <th class="py-3">Farm Activities</th>
+                                                    <th class="py-3">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="py-3">1.</td>
+                                                    <td class="py-3">11-10-2024</td>
+                                                    <td class="py-3">Tractro</td>
+                                                    <td class="py-3">Farm 1</td>
+                                                    <td class="py-3">Stock 1</td>
+                                                    <td class="py-3">Spraying</td>
+                                                    <td class="py-3">300</td>
+                                                </tr>
+    
+                                            </tbody>
+                                        </table>
+                                        
+                                            
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+
+                     <!-- Farm Upload -->
+                     <div class="row mt-4 px-3 px-md-0">
+                        <div class="accordion card px-0 border-secondary border-2 overflow-hidden" id="farmupload">
+                            <div class="card-header p-0">
+                                <button class="accordion-button collapsed bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#farm-upload" aria-expanded="false" aria-controls="farm-upload">
+                                    <h5 class="text-white">Farm Uploads</h5>
+                                </button>
+                            </div>
+                            <div id="farm-upload" class="accordion-collapse collapse" data-bs-parent="#farmupload">
+                                <div class="accordion-body card-body bg-white">
+                                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                                        <div class="col">
+                                            <div class="card">
+                                                <img src="../resources/img/rice-plantation-sunny-sky.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Farm A</h5>
+                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card">
+                                                <img src="../resources/img/rice-plantation-sunny-sky.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Farm A</h5>
+                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card">
+                                                <img src="../resources/img/rice-plantation-sunny-sky.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Farm A</h5>
+                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card">
+                                                <img src="../resources/img/rice-plantation-sunny-sky.jpg" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Farm A</h5>
+                                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+              </div>
+        </section>
+    
+        
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+            $('#example1').DataTable();
+            $('#example2').DataTable();
+        });
+    </script>
+    <script src="../resources/DataTable/jquery.dataTables.min.js"></script>
+    <script src="../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

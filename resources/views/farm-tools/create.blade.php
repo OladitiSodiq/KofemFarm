@@ -20,7 +20,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Farm Tools</h3></div>
                                     <div class="card-body">
-                                        <form method="post" action="{{route('register.store')}}">
+                                        <form method="post" action="{{route('farm_register.store')}}">
                                             @csrf
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
@@ -73,7 +73,7 @@
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="{{route('register.index')}}">Want to see your Tools?</a></div>
+                                        <div class="small"><a href="{{route('farm_register.index')}}">Want to see your Tools?</a></div>
                                     </div>
                                 </div>
                             </div>

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\crop;
-use App\Models\farm;
-use App\Models\farm_crop;
+use App\Models\Crop;
+use App\Models\Farm;
+use App\Models\Farm_crop;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +18,7 @@ class farmCropController extends Controller
      */
     public function index()
     {
-        $farm_crops=farm_crop::where('is_deleted', false)->get();
+        $farm_crops=Farm_crop::where('is_deleted', false)->get();
         if (session('success_message')){
             Alert::toast(session('success_message'),'success')->autoClose(4000);
         }
@@ -33,8 +33,8 @@ class farmCropController extends Controller
      */
     public function create()
     {
-        $farms=farm::where('status','NA')->get();
-        $crops=crop::all();
+        $farms=farm::where('is_deleted', false)->where('staff_id',Auth::User()->id)->get();
+        $crops=Crop::all();
         return view('farm-crop.create',compact('farms','crops'));
     }
 
@@ -54,9 +54,9 @@ class farmCropController extends Controller
         ]);
 
       
-        farm_crop::create($result);
+        Farm_crop::create($result);
 
-        if (Auth::user()->name =="Admin"){
+        if (Auth::user()->role_id == 2){
        
             // Redirect to the admin route
             return redirect()->route('farm-crop.index')->withToastSuccess('farm crop created successfully');
@@ -77,7 +77,7 @@ class farmCropController extends Controller
      * @param  \App\Models\farm_crop  $farm_crop
      * @return \Illuminate\Http\Response
      */
-    public function show(farm_crop $farm_crop)
+    public function show(Farm_crop $farm_crop)
     {
         //
     }
@@ -88,11 +88,14 @@ class farmCropController extends Controller
      * @param  \App\Models\farm_crop  $farm_crop
      * @return \Illuminate\Http\Response
      */
-    public function edit(farm_crop $farm_crop)
+    public function edit(Farm_crop $farm_crop)
     {
-        $farms=farm::where('status','NA')->get();
-        $crops=crop::all();
+        // dd($farm_crop);
+        $farms=farm::where('status','NA')->where('is_deleted', false)->where('staff_id',Auth::User()->id)->get();
+        $crops=Crop::all();
         return view('farm-crop.edit',compact('farms','crops','farm_crop'));
+
+       
     }
 
     /**
@@ -102,8 +105,10 @@ class farmCropController extends Controller
      * @param  \App\Models\farm_crop  $farm_crop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, farm_crop $farm_crop)
+    public function update(Request $request, Farm_crop $farm_crop)
     {
+
+        // dd($request->all());
         $farm_crop->update($request->all());
         return redirect()->route('farm-crop.index')->withSuccessMessage('farm crop updated successfully');
     }
@@ -114,7 +119,7 @@ class farmCropController extends Controller
      * @param  \App\Models\farm_crop  $farm_crop
      * @return \Illuminate\Http\Response
      */
-    public function destroy(farm_crop $farm_crop)
+    public function destroy(Farm_crop $farm_crop)
     {
         $farm_crop->update(['is_deleted' => true]);
         return redirect()->route('farm-crop.index')->withSuccessMessage('farm crop deleted successfully');

@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    <main>
+    {{-- <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Category</h1>
             <ol class="breadcrumb mb-4">
@@ -62,5 +62,64 @@
         </div>
         <script>
         </script>
-    </main>
+    </main> --}}
+    <div class="row">
+        <div class="col-md-8 mt-3 mt-md-0">
+            <p class="heading-1">View Category</p>
+            <p class="">Browse and manage your categories, including their names and descriptions. Use the action buttons to edit or delete category details as needed for efficient organization and management.</p>
+        </div>
+        <div class="col-md-4 d-flex align-items-center justify-content-end mt-3 mt-md-0">
+            <a href="{{route('category.create')}}" class="btn bg-success text-white p-2 px-4">
+                Create Category<i class="fa-regular fa-add ps-2"></i>
+            </a>
+        </div>
+    </div>
+    <div class="mt-4 table-responsive">
+        <table class="table table-hover" id="example">
+            <thead class="table-dark">
+                <tr>
+                    <th class="py-3">S/N</th>
+                    <th class="py-3">Category Name</th>
+                    <th class="py-3">Category Description</th>
+                    <th class="py-3">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($categories as $category)
+                    <tr>
+                        <td class="py-3">1.</td>
+                        <td class="py-3">{{$category->name}}</td>
+                        <td class="py-3 w-50">{{$category->description}}
+                        </td>
+                        
+                        <td class="py-3">
+                            <a href="{{route('category.edit',$category)}}" class="pe-lg-3 p-2 me-lg-2 text-white bg-primary d-inline-block mb-3  text-center"><i class="fa-regular fa-edit px-2"></i>Edit</a>
+                            
+
+                            <form method="post" action="{{route('category.destroy',$category)}}">
+                                @csrf
+                                @method('delete')
+                                <button type="submit"  onclick="confirm('are you sure?')" class="pe-lg-3 p-2 me-lg-2 text-white bg-danger d-inline-block mb-3 text-center">
+                                    <i class="fa-regular fa-trash px-2"></i>Delete</button>
+                            </form>
+                        </td>
+
+
+                        
+                    </tr>
+
+                @endforeach
+
+               
+
+        
+
+                
+            </tbody>
+        </table>
+           
+            
+    </div>
+
+
 @endsection

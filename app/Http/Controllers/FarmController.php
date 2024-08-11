@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Farm_crop;
-use App\Models\farm;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\Stock;
 use App\Models\Assets;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Farm;
+use App\Models\Farm_crop;
+use App\Models\StaffRoleActivity;
+use App\Models\Stock;
 use App\Models\Transaction;
+use App\Models\User;
+
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 class FarmController extends Controller
@@ -23,7 +26,16 @@ class FarmController extends Controller
      */
     public function index()
     {
-        $farms=farm::where('is_deleted', false)->get();
+
+        if (Auth::user()->role_id == 2)
+        {
+            $farms=Farm::where('is_deleted', false)->where('staff_id',Auth::User()->id)->get();
+           
+        }
+        else{
+            $farms=Farm::with('user')->get();
+        }
+        
         if (session('success_message')){
             Alert::toast(session('success_message'),'success')->autoClose(4000);
         }
@@ -51,12 +63,15 @@ class FarmController extends Controller
      */
     public function store(Request $request)
     {
-        
-        farm::create(
-            $request->all()
-        );
+        Farm::create(array_merge(
+            $request->all(),
+            [
+                'created_on' => Carbon::now()
+               
+            ]
+        ));
 
-        if (Auth::user()->name =="Admin"){
+        if (Auth::user()->role_od == 2 ){
        
             // Redirect to the admin route
            
@@ -77,9 +92,9 @@ class FarmController extends Controller
      * @param  \App\Models\farm  $farm
      * @return \Illuminate\Http\Response
      */
-    public function show(farm $farm)
+    public function show(Farm $farm)
     {
-        $farm = farm::findorfail($farm->id);
+        $farm = Farm::findorfail($farm->id);
 
         return view('farm.show',compact('farm'));
 
@@ -92,7 +107,7 @@ class FarmController extends Controller
      * @param  \App\Models\farm  $farm
      * @return \Illuminate\Http\Response
      */
-    public function edit(farm $farm)
+    public function edit(Farm $farm)
     {
         return view('farm.edit',compact('farm'));
 
@@ -105,7 +120,7 @@ class FarmController extends Controller
      * @param  \App\Models\farm  $farm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, farm $farm)
+    public function update(Request $request, Farm $farm)
     {
         $farm->update([
             'name'=> $request->input('name'),
@@ -123,7 +138,7 @@ class FarmController extends Controller
      * @param  \App\Models\farm  $farm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(farm $farm)
+    public function destroy(Farm $farm)
     {
        
         $farm->update(['is_deleted' => true]);
@@ -137,7 +152,7 @@ class FarmController extends Controller
         // Fetch the necessary data based on $farm_crop_id
         // For example:
         $farmCrop = Farm_crop::where('id',$farm_crop_id)->first();
-        $farmname = farm::where('id',$farmCrop->farm_id)->first();
+        $farmname = Farm::where('id',$farmCrop->farm_id)->first();
 
         
         return response()->json($farmname->size);
@@ -295,12 +310,7 @@ class FarmController extends Controller
         $farmData = DB::table('farm_registers')->where('id',$request->activity_id)->first();
    
         $sign ="-";
-
-
-
-       
-
-        $stock = stock::where('asset_id',$request->asset_id)->where('team_id',1)->first();
+        $stock = Stock::where('asset_id',$request->asset_id)->where('team_id',1)->first();
 
 
         if ($stock->current_stock - $request->quantity < 0) {
@@ -325,14 +335,7 @@ class FarmController extends Controller
             return back()->withToastSuccess($status);
         
         }
-        
-
-
         // $sign 
-
-
-
-
             //     return redirect()->route('category.index')->withToastWarning('cannot delete existing parent farm');
             // }
             // else{
@@ -344,6 +347,21 @@ class FarmController extends Controller
 
     }
 
+    public function staffrole(Request $request)
+    {
+        
+        Farm::where('id',$request->input('farm_id'))->update([
+            'staff_id'=> $request->input('assignedstaff')
+        ]);
+        User::where('id',$request->input('assignedstaff'))->update([
+            'is_assigned'=> 1
+        ]);
+        StaffRoleActivity::create([
+            'staff_id' => $request->input('assignedstaff'),
+            'farm_id' => $request->input('farm_id')
+        ]);
+        return back()->withSuccessMessage('Staff Assigned to Farm successfully');
+    }
 
     
 }

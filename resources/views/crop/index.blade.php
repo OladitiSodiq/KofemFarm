@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    <main>
+    {{-- <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">Crops</h1>
             <ol class="breadcrumb mb-4">
@@ -88,6 +88,62 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-</script>
+</script> --}}
 
+
+<div class="row">
+    <div class="col-md-8 mt-3 mt-md-0">
+        <p class="heading-1">View Crops</p>
+        <p class="">Browse and manage your crops, including their names, durations, and descriptions. Use the action buttons to edit or delete crop details as needed for effective crop management.</p>
+    </div>
+    <div class="col-md-4 d-flex align-items-center justify-content-end mt-3 mt-md-0">
+        <a href="add-crops.html" class="btn bg-success text-white p-2 px-4">
+            Create Crop<i class="fa-regular fa-add ps-2"></i>
+        </a>
+    </div>
+</div>
+<div class="mt-4 table-responsive">
+    <table class="table table-hover" id="example">
+        <thead class="table-dark">
+            <tr>
+                <th class="py-3">S/N</th>
+                <th class="py-3">Crop Name</th>
+                <th class="py-3">Crop Duration</th>
+                <th class="py-3">Crop Description</th>
+                <th class="py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($crops as $crop)
+                <tr>
+                    <td class="py-3">1.</td>
+                    <td class="py-3">{{$crop->name}}</td>
+                    <td class="py-3">{{$crop->duration}}</td>
+                    <td class="py-3" style="width: 40%;"> {{$crop->description}} </td>
+                    
+                    
+                    @if (Auth::check() && Auth::user()->role_id == 2)
+
+                        <td class="py-3">
+                            <a href="{{route('crop.edit',$crop)}}" class="pe-lg-3 p-2 me-lg-2 text-white bg-primary d-inline-block mb-3  text-center"><i class="fa-regular fa-edit px-2"></i>Edit</a>
+                        
+                            <form method="post" action="{{route('crop.destroy',$crop)}}">
+                                @csrf
+                                @method('delete')
+                                <button type="submit"  onclick="confirm('are you sure?')" class="pe-lg-3 p-2 me-lg-2 text-white bg-danger d-inline-block mb-3 text-center">
+                                    <i class="fas fa-trash"></i>delete</button>
+                            </form>
+                        </td>         
+                    @endif
+                </tr>
+            @endforeach
+
+          
+
+    
+
+            
+        </tbody>
+    </table>    
+</div>
 @endsection

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../resources/DataTable/jquery.dataTables.min.css">
+    <link rel="shortcut icon" href="../resources/img/kofem_logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/fontawesome.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/brands.css">
+    <link rel="stylesheet" href="../resources/fontawesome/css/solid.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <title>KOFEM - Farm Manager</title>
+
+    <script src="../resources/jQuery/jquery.js"></script>
+</head>
+<body>
+
+    <div class="main">
+
+        <section id="sidebar" class="py-3">
+            <a href="/" class="d-flex align-items-center justify-content-center py-3 my-3 text-decoration-none">
+                <img src="../resources/img/kofem_logo.png" alt="KOFEM Logo" class="w-50">
+            </a>
+    
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="dropdown active">
+                    <a href="#" class="nav-link text-white ">
+                        <i class="fa-regular fa-chart-line"></i>
+                        Dashboard
+                    </a>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageFarmToggle">
+                        <i class="fa-regular fa-bars-progress"></i>
+                        Manage Farm
+                    </a>
+                    <ul class="d-none drop-menu" id="manageFarmDropdown">
+                        <li><a class="" href="farm-overview.html"><i class="fa-regular fa-binoculars"></i>Farm Overview</a></li>
+                        <li><a class="" href="farm-crop.html"><i class="fa-regular fa-leaf"></i>Farm Crop</a></li>
+                        <li><a class="" href="farm-activities.html"><i class="fa-regular fa-list-check"></i>Farm Activities</a></li>
+                        <li><a class="" href="farm-upload.html"><i class="fa-regular fa-cloud-arrow-up"></i>Farm Upload</a></li>
+                        <li><a class="" href="farm-notes.html"><i class="fa-regular fa-book"></i>Farm Notes</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="manageCropsToggle">
+                        <i class="fa-regular fa-wheat-awn"></i>
+                        Manage Crops
+                    </a>
+                    <ul class="d-none drop-menu" id="manageCropsDropdown">
+                        <li><a class="" href="add-crops.html"><i class="fa-regular fa-plus"></i>Add Crops</a></li>
+                        <li><a class="" href="view-crops.html"><i class="fa-regular fa-eye"></i>View Crops</a></li>
+                    </ul>
+                </li>
+    
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-tractor"></i>
+                        Farm Categories
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a class="" href="add-categories.html"><i class="fa-regular fa-plus"></i>Add Category</a></li>
+                        <li><a class="" href="view-categories.html"><i class="fa-regular fa-eye"></i>View Category</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-arrows-to-dot"></i>
+                        Farm Assets
+                    </a>
+                    <ul class="d-none drop-menu" id="farmActivitiesDropdown">
+                        <li><a href="add-farm-assets.html"><i class="fa-regular fa-plus"></i>Add Farm Assets</a></li>
+                        <li><a href="view-farm-assets.html"><i class="fa-regular fa-eye"></i>View Farm Assets</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section id="content">
+            <div class="container-fluid p-0">
+
+                <!-- Header  -->
+                <div class=" search  d-flex justify-content-between align-items-center">
+                    <!-- search box -->
+                    <div class="col">
+                      <span class="bars d-md-none pe-3">
+                        <i class="fa-regular fa-bars"  style="font-size: 30px;"></i>
+                      </span>
+                    </div>
+                    <div class="search-box col-md-4">
+                      <form action="post">
+                        <div class="input-group input-group-sm">
+                          <input type="text" class="form-control py-2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Search here">
+                          <input type="submit" class="input-group-text btn btn-success" id="inputGroup-sizing-sm" value="Search">
+                        </div> 
+                      </form>
+                      
+                    </div>
+                    <!-- search box -->
+        
+                    
+  
+                    <!-- User details -->
+                    <div class="dropdown user-details col-md-4 d-flex justify-content-end align-items-center">
+                      <h5 class="m-0 d-none d-md-flex align-items-center">Admin</h5>
+                      <a href="#" class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="../resources/img/02.jpg" alt="user" width="40px" height="auto" class="ms-3">
+                      </a>
+  
+                      <ul class="dropdown-menu text-small shadow">
+                          <li><a class="dropdown-item" href="#">New project...</a></li>
+                          <li><a class="dropdown-item" href="#">Settings</a></li>
+                          <li><a class="dropdown-item" href="#">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                    <!-- User details -->
+                </div>
+                <!-- Header  -->
+
+                <div class="p-3 p-md-4 p-lg-5">
+                    <div class="row px-3 px-md-0">
+                        <div class="col mb-2">
+                            <div class="row">
+                                <div class="col px-0">
+                                    <div class="card mb-3 border-black text-center h-100">
+                                        <div class="card-header bg-dark py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Total Farm</p>
+                                            <h2 class="card-title mt-1 fw-bold">12</h2>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col">
+                                    <div class="card mb-3 border-secondary text-center h-100">
+                                        <div class="card-header bg-secondary py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Total Crop</p>
+                                            <h2 class="card-title mt-1 fw-bold">24</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col px-0">
+                                    <div class="card mb-3 border-success text-center h-100">
+                                        <div class="card-header bg-success py-3"></div>
+                                        <div class="card-body">
+                                            <p class="card-text">Total Expenses</p>
+                                            <h2 class="card-title mt-1 fw-bold"><span class="naira">N</span>30,000</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        
+                        
+                        
+                    </div>
+
+                    <div class="row mt-3 px-3 px-md-0">
+                        <div class="card border-danger px-0">
+                            <div class="card-header bg-danger py-3"></div>
+                            <div class="row align-items-center px-2">
+                                <div class="col-md-11 col-lg-8 px-0 my-2 px-3">
+                                    <p class="fs-3 fw-bold">Farm Expenses</p>
+                                    <p>Visualize your farm's spending with this bar chart, showing a breakdown of expenses. Easily track and manage your costs to improve financial planning and efficiency.</p>
+                                </div>
+                                <div class="col">
+                                    <!-- Pay Labourer Button trigger modal -->
+                                    <button type="button" class="col col-md-12 btn btn-warning mb-3 mb-md-0" data-bs-toggle="modal" data-bs-target="#payLabourer">
+                                        <i class="fa-regular fa-wallet pe-2"></i>Pay Labourer
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="payLabourer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="payLabourerLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header  text-warning">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row ">
+                                                    <div class="col mt-3 mt-md-0">
+                                                        <h2 class="fw-bolder text-warning">Pay Labourer</h2>
+                                                        <p class="">Record and manage payments to your laborers by entering the necessary details. Ensure timely and accurate compensation for the work performed on your farm.</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-4">
+                                                <form action="" method="post">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="labourerName" placeholder="category Name" required>
+                                                        <label for="labourerName">Labourer Name</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="category Name" required>
+                                                        <label for="floatingInputGrid">Enter Amounts</label>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control" placeholder="Leave a comment here" id="labourerDescription" style="height: 150px"></textarea>
+                                                        <label for="labourerDescription">Labourer Description</label>
+                                                    </div>
+                                
+                                                    <div class="col">
+                                                        <button type="submit" class="btn btn-warning w-100">Pay Labourer</button>
+                                                    </div>
+                                
+                                                </form>
+                                                    
+                                                        
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <canvas id="myChart" class="ps-3"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 px-3 px-md-0 row-cols-md-2 ">
+                        <div class="col-sm px-0 pe-md-1 mb-3">
+                            <div class="card border-dark px-0">
+                                <div class="card-header bg-dark py-3"></div>
+                                <div class="col px-3 my-2">
+                                    <p class="fs-3 fw-bold">List of Farms</p>
+                                    <p class="mb-2">Quick view of all the farms registered in your system.</p>
+                                </div>
+                                
+                                <table class="table table-hover">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <th class="py-3">S/N</th>
+                                            <th class="py-3">Farm Name</th>
+                                            <th class="py-3">Farm Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-3">1.</td>
+                                            <td class="py-3">Farm 1</td>
+                                            <td class="py-3">Ibadan</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm px-0 ps-md-1 mb-3">
+                            <div class="card border-dark px-0">
+                                <div class="card-header bg-dark py-3"></div>
+                                <div class="col px-3 my-2">
+                                    <p class="fs-3 fw-bold">List of Crops</p>
+                                    <p class="mb-2"> Quick view on each crop in the farm.</p>
+                                </div>
+                                
+                                <table class="table table-hover">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <th class="py-3">S/N</th>
+                                            <th class="py-3">Crop Name</th>
+                                            <th class="py-3">Crop Duration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-3">1.</td>
+                                            <td class="py-3">Maize</td>
+                                            <td class="py-3">3 month</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                
+                </div>
+            </div>
+        </section>
+    
+        
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+            $('#example1').DataTable();
+            $('#example2').DataTable();
+        });
+    </script>
+    <script src="../resources/Chart.js/chart.umd.js"></script>
+    <script src="../resources/DataTable/jquery.dataTables.min.js"></script>
+    <script src="../resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Farm 1', 'Farm 2', 'Farm 3', 'Farm 4', 'Farm 5', 'Farm 6', 'Farm 7'],
+            datasets: [{
+              label: 'Expenses in Thousands Naira',
+              data: [12, 19, 3, 8, 5, 7, 15],
+              backgroundColor: [
+                'rgba(255, 99, 132)',
+                'rgba(255, 159, 64)',
+                'rgba(255, 205, 86)',
+                'rgba(75, 192, 192)',
+                'rgba(54, 162, 235)',
+                'rgba(153, 102, 255)',
+                'rgba(201, 203, 207)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+           
+          }
+        });
+      </script>
+</body>
+</html>

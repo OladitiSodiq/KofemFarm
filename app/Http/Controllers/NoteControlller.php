@@ -6,6 +6,7 @@ use App\Models\farm_crop;
 use App\Models\farm_note;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class NoteControlller extends Controller
 {
