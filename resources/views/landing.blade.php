@@ -315,7 +315,7 @@
     
     
         <!-- Team Start -->
-        <section class="container-fluid py-5" id="team">
+        {{-- <section class="container-fluid py-5" id="team">
             <div class="container">
                 <div class="mx-auto text-center mb-5" style="max-width: 500px;">
                     <h6 class="text-primary text-uppercase">The Team</h6>
@@ -349,7 +349,7 @@
                     
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!-- Team End -->
     
          <!-- Contact Start -->
