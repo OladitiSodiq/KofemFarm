@@ -191,37 +191,55 @@
                         <li class="{{   Route::is('category.index') ? 'active' : '' }}"><a class="" href="{{route('category.index')}}"><i class="fa-regular fa-eye"></i>View Category</a></li>
                     </ul>
                 </li>
+
+                <li class="dropdown {{  Route::is('category.index') || Route::is('category.create') || Route::is('category.edit') ? 'active' : '' }}">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-shopping-cart"></i>
+                      Airtime
+                    </a>
+                    
+                </li>
+
+                <li class="dropdown {{  Route::is('category.index') || Route::is('category.create') || Route::is('category.edit') ? 'active' : '' }}">
+                    <a href="#" class="nav-link text-white dropdown-toggle" id="farmActivitiesToggle">
+                        <i class="fa-regular fa-exchange"></i>
+                       Transactions
+                    </a>
+                    
+                </li>
+
+
                 @if (Auth::user()->role_id == 1)
-                <li class="dropdown {{  Route::is('staff.index') || Route::is('staff.create') || Route::is('staff.edit')  ? 'active' : '' }}">
-                    <a href="{{route('staff.index')}}" class="nav-link text-white dropdown-toggle" id="managestaffToggle">
-                        <i class="fa-regular fa-user"></i>
-                        Manage Staff
-                    </a>
-                    <ul class="d-none drop-menu" id="managestaffDropdown">
-                        <li class="{{   Route::is('staff.create') ? 'active' : '' }}"><a class="" href="{{route('staff.create')}}"><i class="fa-regular fa-plus"></i>Add Staff</a></li>
-                        <li class="{{   Route::is('staff.index') ? 'active' : '' }}"><a class="" href="{{route('staff.index')}}"><i class="fa-regular fa-eye"></i>View Staff</a></li>
-                    </ul>
-                </li>
+                    <li class="dropdown {{  Route::is('staff.index') || Route::is('staff.create') || Route::is('staff.edit')  ? 'active' : '' }}">
+                        <a href="{{route('staff.index')}}" class="nav-link text-white dropdown-toggle" id="managestaffToggle">
+                            <i class="fa-regular fa-user"></i>
+                            Manage Staff
+                        </a>
+                        <ul class="d-none drop-menu" id="managestaffDropdown">
+                            <li class="{{   Route::is('staff.create') ? 'active' : '' }}"><a class="" href="{{route('staff.create')}}"><i class="fa-regular fa-plus"></i>Add Staff</a></li>
+                            <li class="{{   Route::is('staff.index') ? 'active' : '' }}"><a class="" href="{{route('staff.index')}}"><i class="fa-regular fa-eye"></i>View Staff</a></li>
+                        </ul>
+                    </li>
 
 
-                <li class="dropdown {{  Route::is('settings.about_us') || Route::is('settings.edit_about_us') || Route::is('settings.team') ||  Route::is('settings.create_team') || Route::is('settings.edit_team_member') || Route::is('settings.testimonial') ||  Route::is('settings.create_testimonial') || Route::is('settings.edit_testimonial')  ? 'active' : '' }}">
-                    <a href="" class="nav-link text-white dropdown-toggle" id="managestaffToggle">
-                        <i class="fa-regular fa-user"></i>
-                        Settings
-                    </a>
-                    <ul class="d-none drop-menu" id="managestaffDropdown">
-                        <li class="{{   Route::is('settings.about_us') || Route::is('settings.edit_about_us') ? 'active' : '' }}"><a class="" href="{{route('settings.about_us')}}"><i class="fa-regular fa-plus"></i>About us</a></li>
+                    <li class="dropdown {{  Route::is('settings.about_us') || Route::is('settings.edit_about_us') || Route::is('settings.team') ||  Route::is('settings.create_team') || Route::is('settings.edit_team_member') || Route::is('settings.testimonial') ||  Route::is('settings.create_testimonial') || Route::is('settings.edit_testimonial')  ? 'active' : '' }}">
+                        <a href="" class="nav-link text-white dropdown-toggle" id="managestaffToggle">
+                            <i class="fa-regular fa-user"></i>
+                            Settings
+                        </a>
+                        <ul class="d-none drop-menu" id="managestaffDropdown">
+                            <li class="{{   Route::is('settings.about_us') || Route::is('settings.edit_about_us') ? 'active' : '' }}"><a class="" href="{{route('settings.about_us')}}"><i class="fa-regular fa-plus"></i>About us</a></li>
 
-                        <li class="{{   Route::is('settings.team') ||  Route::is('settings.create_team') || Route::is('settings.edit_team_member')? 'active' : '' }}"><a class="" href="{{route('settings.team')}}"><i class="fa-regular fa-plus"></i>Our Team</a></li>
-
-
-                        <li class="{{   Route::is('settings.testimonial') ||  Route::is('settings.create_testimonial') || Route::is('settings.edit_testimonial')? 'active' : '' }}"><a class="" href="{{route('settings.testimonial')}}"><i class="fa-regular fa-plus"></i>Our Testimonial</a></li>
+                            <li class="{{   Route::is('settings.team') ||  Route::is('settings.create_team') || Route::is('settings.edit_team_member')? 'active' : '' }}"><a class="" href="{{route('settings.team')}}"><i class="fa-regular fa-plus"></i>Our Team</a></li>
 
 
+                            <li class="{{   Route::is('settings.testimonial') ||  Route::is('settings.create_testimonial') || Route::is('settings.edit_testimonial')? 'active' : '' }}"><a class="" href="{{route('settings.testimonial')}}"><i class="fa-regular fa-plus"></i>Our Testimonial</a></li>
 
-                        {{-- <li class="{{   Route::is('staff.index') ? 'active' : '' }}"><a class="" href="{{route('staff.index')}}"><i class="fa-regular fa-eye"></i>View Staff</a></li> --}}
-                    </ul>
-                </li>
+
+
+                            {{-- <li class="{{   Route::is('staff.index') ? 'active' : '' }}"><a class="" href="{{route('staff.index')}}"><i class="fa-regular fa-eye"></i>View Staff</a></li> --}}
+                        </ul>
+                    </li>
 
 
                 @endif

@@ -56,11 +56,10 @@
                     <div class="controls">
                         <button type="button" id="startRecording" class="btn btn-success">🔴 Start Recording</button>
                         <button type="button" id="stopRecording" class="btn btn-danger" disabled>⏹️ Stop Recording</button>
-                        <button type="button" id="switchCamera" class="btn btn-info">🔄 Switch Camera</button>
                     </div>
                     <a id="downloadLink" class="download-link" style="display: none;">⬇️ Download Video</a>
                 </div>
-                
+
                 <div class="col mt-4 media-type image-fields">
                     <button type="submit" class="btn btn-success w-100">Upload Image/Video</button>
                 </div>
@@ -124,99 +123,86 @@
             }
         });
 
-    const videoPreview = document.getElementById("videoPreview");
-    const startRecordingButton = document.getElementById("startRecording");
-    const stopRecordingButton = document.getElementById("stopRecording");
-    const downloadLink = document.getElementById("downloadLink");
-    const switchCameraButton = document.getElementById("switchCamera");
+        const videoPreview = document.getElementById("videoPreview");
+        const startRecordingButton = document.getElementById("startRecording");
+        const stopRecordingButton = document.getElementById("stopRecording");
+        const downloadLink = document.getElementById("downloadLink");
 
-    let mediaRecorder;
-    let recordedChunks = [];
-    let currentStream;
-    let frontCamera = true;
+        let mediaRecorder;
+        let recordedChunks = [];
 
-    startRecordingButton.addEventListener("click", startRecording);
-    stopRecordingButton.addEventListener("click", stopRecording);
-    switchCameraButton.addEventListener("click", switchCamera);
+        startRecordingButton.addEventListener("click", startRecording);
+        stopRecordingButton.addEventListener("click", stopRecording);
 
-    async function startRecording() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: frontCamera ? 'user' : 'environment' }, audio: true });
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 
-            currentStream = stream;
-            videoPreview.srcObject = stream;
-            mediaRecorder = new MediaRecorder(stream);
+                videoPreview.srcObject = stream;
+                mediaRecorder = new MediaRecorder(stream);
 
-            mediaRecorder.ondataavailable = (event) => {
-                if (event.data.size > 0) {
-                    recordedChunks.push(event.data);
-                }
-            };
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
 
-            mediaRecorder.onstop = () => {
-                const videoBlob = new Blob(recordedChunks, { type: "video/webm" });
-                recordedChunks = [];
+                mediaRecorder.onstop = () => {
+                    const videoBlob = new Blob(recordedChunks, { type: "video/webm" });
+                    recordedChunks = [];
 
-                const videoURL = URL.createObjectURL(videoBlob);
-                downloadLink.href = videoURL;
-                downloadLink.style.display = "block";
-                downloadLink.download = "recorded-video.webm";
+                    const videoURL = URL.createObjectURL(videoBlob);
+                    downloadLink.href = videoURL;
+                    downloadLink.style.display = "block";
+                    downloadLink.download = "recorded-video.webm";
 
-                uploadVideo(videoBlob);
-            };
+                    uploadVideo(videoBlob);
+                };
 
-            mediaRecorder.start();
-            startRecordingButton.disabled = true;
-            stopRecordingButton.disabled = false;
-        } catch (error) {
-            console.error("Error starting recording:", error);
-        }
-    }
-
-    function stopRecording() {
-        if (mediaRecorder && mediaRecorder.state === "recording") {
-            mediaRecorder.stop();
-            startRecordingButton.disabled = false;
-            stopRecordingButton.disabled = true;
-        } else {
-            console.error("MediaRecorder is not recording.");
-        }
-    }
-
-    function switchCamera() {
-        if (currentStream) {
-            currentStream.getTracks().forEach(track => track.stop());
-        }
-        frontCamera = !frontCamera;
-        startRecording();
-    }
-
-    function uploadVideo(videoBlob) {
-        console.log("Uploading video...");
-        const formData = new FormData();
-        formData.append('farm_register_id', $('#farm_crop_id').val());
-        formData.append('media_type', document.querySelector('input[name="media_type"]:checked').value);
-        formData.append('video', videoBlob, 'recorded-video.webm');
-
-        $.ajax({
-            url: '{{ route('farmUpload.store') }}',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                console.log('Upload successful:', response);
-                alert('Video uploaded successfully!');
-            },
-            error: function (xhr) {
-                console.error('Error uploading video:', xhr);
-                console.error('Response:', xhr.responseText);
+                mediaRecorder.start();
+                startRecordingButton.disabled = true;
+                stopRecordingButton.disabled = false;
+            } catch (error) {
+                console.error("Error starting recording:", error);
             }
-        });
-    }
-});
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+                mediaRecorder.stop();
+                startRecordingButton.disabled = false;
+                stopRecordingButton.disabled = true;
+            } else {
+                console.error("MediaRecorder is not recording.");
+            }
+        }
+
+        function uploadVideo(videoBlob) {
+            console.log("Uploading video...");
+            const formData = new FormData();
+            formData.append('farm_register_id', $('#farm_crop_id').val());
+            formData.append('media_type', document.querySelector('input[name="media_type"]:checked').value);
+            formData.append('video', videoBlob, 'recorded-video.webm');
+
+            $.ajax({
+                url: '{{ route('farmUpload.store') }}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    console.log('Upload successful:', response);
+                    alert('Video uploaded successfully!');
+                },
+                error: function (xhr) {
+                    console.error('Error uploading video:', xhr);
+                    console.error('Response:', xhr.responseText);
+                }
+            });
+        }
+    });
 </script>
 @endsection

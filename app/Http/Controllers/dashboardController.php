@@ -23,6 +23,22 @@ class dashboardController extends Controller
 
             return view('dashboard',compact('crop_count','farm_count','crops','farms'));
 
+
+
+        }
+
+        elseif (Auth::user()->role_id == 2){
+            $crop_count =Crop::count();
+            $farm_count =Farm::where('is_deleted',0)->where('staff_id',Auth::User()->id)->count();
+
+            $crops =Crop::get();
+            $farms =Farm::where('is_deleted',0)->where('staff_id',Auth::User()->id)->get();
+
+
+
+
+            return view('manager_dashboard',compact('crop_count','farm_count','crops','farms'));
+
         }
     }
 
